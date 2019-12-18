@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :movies, only: [:index, :show]
+    end
+  end
+
   root "home#welcome"
   resources :genres, only: :index do
     member do
