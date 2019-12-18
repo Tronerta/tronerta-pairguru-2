@@ -1,12 +1,16 @@
 class MoviesController < ApplicationController
   before_action :authenticate_user!, only: [:send_info]
+  include MoviesHelper
 
   def index
     @movies = Movie.all.decorate
+    @url = "https://pairguru-api.herokuapp.com/"
   end
 
   def show
     @movie = Movie.find(params[:id])
+    @url = "https://pairguru-api.herokuapp.com/"
+    @data = get_movie_data(@url, @movie.title)
   end
 
   def send_info
