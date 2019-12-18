@@ -14,7 +14,7 @@ module Api
         @movie = Movie.find(params[:id])
         render json: @movie,
                include: { genre: { only: [:id, :name], methods: :number_of_movies } },
-               except: :genre_id
+               except: [:genre_id, :created_at, :updated_at]
       end
     end
   end
