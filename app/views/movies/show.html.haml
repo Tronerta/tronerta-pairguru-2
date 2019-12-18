@@ -1,6 +1,16 @@
 %h1= @movie.title
 .jumbotron
-  = @movie.description
+  .row
+    .col-md-3
+      %img.img-rounded{src: "#{@url}#{@data["poster"]}"}
+    .col-md-8
+      %p
+        %strong Rating:
+        =@data["rating"]
+      %p
+        %strong
+          =@data["plot"]
+      = @movie.description
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
 
