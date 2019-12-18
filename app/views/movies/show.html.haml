@@ -13,3 +13,12 @@
       = @movie.description
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
+
+
+- if @movie.comments.exists?
+  .row.row-column
+    .col-md-12
+      = render "comments/comments", comments: @movie.comments
+
+- if user_signed_in? && current_user.comments.where(movie_id: @movie.id).empty?
+  = render partial: "comments/form", locals: {comment: @movie.comments.new}
