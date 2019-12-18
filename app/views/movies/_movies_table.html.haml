@@ -1,13 +1,19 @@
 %table.table.table-striped
   %tbody
     - movies.each_with_index do |movie, i|
+      - data = get_movie_data(@url, movie.title)
       %tr
         %td= i + 1
         %td
-          %img.img-rounded{ src: movie.cover }
+          %img.img-rounded.movies-index-image{ src: @url + data["poster"] }
         %td
           %h4
             = link_to movie.title, movie_path(movie)
+          %p
+            %strong Rating:
+            = data["rating"]
+          %p
+            %em #{data["plot"]}
           %p
             %strong
               = link_to movie.genre.name, movies_genre_path(movie.genre)
