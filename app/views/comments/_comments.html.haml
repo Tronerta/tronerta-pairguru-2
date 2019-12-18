@@ -1,0 +1,11 @@
+.comments
+  - comments.each do |comment|
+    .card
+      .card-body
+        %h4.card-title #{comment.user.name} says:
+        %p
+          = comment.body
+        - if comment.user == current_user
+          = link_to "Delete comment", [comment.movie, comment],
+            method: :delete, data: {confirm: "Are you sure?"},
+            class: 'card-link'
