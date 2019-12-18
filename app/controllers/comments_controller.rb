@@ -4,17 +4,12 @@ class CommentsController < ApplicationController
 
   def create
     @movie = Movie.find(params[:movie_id])
-    if current_user.comments.find_by(movie_id: @movie.id)
-      redirect_to @movie, notice: "You already commented this movie"
-    else
-      @comment = @movie.comments.create(comment_params)
-      @comment.user_id = current_user.id
+    @comment = @movie.comments.build(comment_params)
 
-      if @comment.save
-        redirect_to @movie, notice: "Comment was successfully created."
-      else
-        redirect_to @movie, notice: "Comment was not created."
-      end
+    if @comment.save
+      redirect_to @movie, notice: "Comment was successfully created."
+    else
+      redirect_to @movie, notice: "Comment was not created."
     end
   end
 
@@ -36,6 +31,6 @@ class CommentsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def comment_params
-    params.require(:comment).permit(:body, :movie_id)
+    params.require(:comment).permit(:body, :movie_id).merge( user_id: current_user.id )
   end
 end
